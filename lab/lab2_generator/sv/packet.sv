@@ -39,6 +39,7 @@ endfunction
 
 function void display(string prefix = "");
     $display("Packet %s:", prefix);
+    $display("========================================================");
     $display("    sof_flag_type : %s", sof_flag_type.name());
     $display("    parity_type   : %s", parity_type.name());
     $display("    eof_flag_type : %s", eof_flag_type.name());
@@ -50,6 +51,7 @@ function void display(string prefix = "");
     end
     $display("    parity   : %h", parity);
     $display("    eof_flag : %h", eof_flag);
+    $display("========================================================");
 endfunction
 
 endclass
