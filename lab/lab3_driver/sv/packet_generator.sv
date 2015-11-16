@@ -28,12 +28,15 @@ task packet_generator::run();
         begin
             for(int i=0; i<run_for_n_insts; i++) begin
                 packet pkt_cp = new pkt;
+
                 if(!pkt_cp.randomize()) begin
                     $display("Error to randomize pkt_cp");
                     $finish();
                 end
-                pkt_cp.display();
-                //out_box.put(packet_tran_cpy);
+
+                pkt_cp.display("packet_generator");
+
+                out_box.put(pkt_cp);
             end
             ->done;
         end

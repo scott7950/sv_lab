@@ -12,8 +12,8 @@ compile:
 	vlog -sv -novopt +incdir+../sv $(COMP_FILES)
 
 sim:
-	vsim -novopt -c -do do.tcl work.tb_top work.hw_top
+	vsim -novopt -c -do do.tcl -wlf wave.wlf -l simv.log work.tb_top work.hw_top
 
 clean:
-	rm -rf work transcript
+	rm -rf work transcript wave.wlf simv.log
 

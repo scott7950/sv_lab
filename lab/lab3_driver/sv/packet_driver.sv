@@ -29,7 +29,7 @@ task packet_driver::run();
         forever begin
             vif.cb.dout_valid <= 1'b0;
             in_box.get(pkt);
-            pkt.display();
+            pkt.display("packet_driver");
 
             @(vif.cb);
             vif.cb.dout <= pkt.sof_flag;
@@ -50,5 +50,4 @@ task packet_driver::run();
 endtask
 
 `endif
-
 

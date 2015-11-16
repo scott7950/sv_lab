@@ -1,6 +1,5 @@
 `include "packet_generator.sv"
 `include "packet_driver.sv"
-`include "packet_if.svi"
 
 program tb_top;
 
