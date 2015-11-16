@@ -1,0 +1,20 @@
+`ifndef __PACKET_IF_SVI__
+`define __PACKET_IF_SVI__
+
+interface packet_if (input logic clk, input logic rst_n);
+
+logic [7:0] dout;
+logic       dout_valid;
+
+clocking cb @(posedge clk);
+    default input #1 output #1;
+    output dout        ;
+    output dout_valid  ;
+endclocking
+
+modport master(clocking cb);
+
+endinterface
+
+`endif
+
