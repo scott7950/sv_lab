@@ -1,6 +1,8 @@
 .PHONY: run clean compile sim
 
-TB_FILES = top_tb.sv
+TB_DIR = ../tb
+
+TB_FILES = $(TB_DIR)/top_tb.sv
 
 run: compile sim
 

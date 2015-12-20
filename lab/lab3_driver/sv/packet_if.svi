@@ -1,18 +1,49 @@
 `ifndef __PACKET_IF_SVI__
 `define __PACKET_IF_SVI__
 
-interface packet_if (input logic clk, input logic rst_n);
+interface packet_if ();
 
-logic [7:0] dout;
-logic       dout_valid;
+logic tx;
+logic rx;
 
-clocking cb @(posedge clk);
-    default input #1 output #1;
-    output dout        ;
-    output dout_valid  ;
-endclocking
+typedef enum {
+    SOF,
+    PAYLOAD,
+    PARITY,
+    EOF,
+    PKT_INVALID
+} pkt_phase_enum;
 
-modport master(clocking cb);
+typedef enum {
+    START,
+    DATA,
+    STOP,
+    UART_INVALID
+} uart_phase_enum;
+
+pkt_phase_enum pkt_phase;
+int pkt_phase_value;
+uart_phase_enum uart_phase;
+int uart_phase_value;
+
+always @(*) begin
+    case(pkt_phase_value)
+        0: pkt_phase = SOF;
+        1: pkt_phase = PAYLOAD;
+        2: pkt_phase = PARITY;
+        3: pkt_phase = EOF;
+        -1: pkt_phase = PKT_INVALID;
+    endcase
+end
+
+always @(*) begin
+    case(uart_phase_value)
+        0: uart_phase = START;
+        1: uart_phase = DATA;
+        2: uart_phase = STOP;
+        -1: uart_phase = UART_INVALID;
+    endcase
+end
 
 endinterface
 

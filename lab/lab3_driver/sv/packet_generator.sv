@@ -7,36 +7,38 @@
 class packet_generator;
 
 string name;
-packet_tran_mbox out_box;
+packet_tran_mbox out_chan;
 int run_for_n_insts = 0;
 packet pkt;
 event done;
 
-extern function new(string name = "Packet Generator", packet_tran_mbox out_box);
+extern function new(string name = "Packet Generator", packet_tran_mbox out_chan);
 extern task run();
 
 endclass
 
-function packet_generator::new(string name = "Packet Generator", packet_tran_mbox out_box);
+function packet_generator::new(string name = "Packet Generator", packet_tran_mbox out_chan);
     this.name = name;
-    this.out_box = out_box;
+    this.out_chan = out_chan;
 endfunction
 
 task packet_generator::run();
+    packet pkt_cp;
     pkt = new("pkt");
+
     fork
         begin
             for(int i=0; i<run_for_n_insts; i++) begin
-                packet pkt_cp = new pkt;
-
-                if(!pkt_cp.randomize()) begin
-                    $display("Error to randomize pkt_cp");
+                if(!pkt.randomize()) begin
+                    $display("Error to randomize pkt");
                     $finish();
                 end
 
+                pkt_cp = new pkt;
+
                 pkt_cp.display("packet_generator");
 
-                out_box.put(pkt_cp);
+                out_chan.put(pkt_cp);
             end
             ->done;
         end
